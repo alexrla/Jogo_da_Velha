@@ -134,8 +134,6 @@ h1 {
 
   color: #FFF;
 
-  display: none;
-
   font-size: 50px;
 
   left: 0;
@@ -157,5 +155,5 @@ h1 {
 
 /* Hide */
 .hide {
-  /* display: none!important; */
+  display: none!important;
 }

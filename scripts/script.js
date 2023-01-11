@@ -2,7 +2,7 @@ let x = document.querySelector(".x");
 let o = document.querySelector(".o");
 let boxes = document.querySelectorAll(".box");
 let btns = document.querySelectorAll("#btn-container button");
-let message = document.querySelector("#message");
+let messageContainer = document.querySelector("#message");
 let messageText = document.querySelector("#message p");
 
 let secondPlayer;
@@ -72,14 +72,14 @@ function verifyWinner() {
       block3Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block1Child === "o" &&
       block2Child === "o" &&
       block3Child === "o"
     ) {
       // O venceu
-      alert("O venceu!");
+      declareWinner("o");
     }
   }
 
@@ -98,14 +98,14 @@ function verifyWinner() {
       block6Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block4Child === "o" &&
       block5Child === "o" &&
       block6Child === "o"
     ) {
       // O venceu
-      alert("O venceu!");
+      declareWinner("o");
     }
   }
 
@@ -124,14 +124,14 @@ function verifyWinner() {
       block9Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block7Child === "o" &&
       block8Child === "o" &&
       block9Child === "o"
     ) {
       // O venceu
-      alert("O venceu!");
+      declareWinner("o");
     }
   }
 
@@ -151,14 +151,14 @@ function verifyWinner() {
       block7Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block1Child === "o" &&
       block4Child === "o" &&
       block7Child === "o"
     ) {
       // O venceu
-      alert("O venceu!");
+      declareWinner("o");
     }
   }
 
@@ -177,14 +177,14 @@ function verifyWinner() {
       block8Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block2Child === "o" &&
       block5Child === "o" &&
       block8Child === "o"
     ) {
       // O venceu
-      alert("O venceu!");
+      declareWinner("o");
     }
   }
 
@@ -203,14 +203,14 @@ function verifyWinner() {
       block9Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block3Child === "o" &&
       block6Child === "o" &&
       block9Child === "o"
     ) {
       // O venceu
-      alert("X venceu!");
+      declareWinner("o");
     }
   }
 
@@ -230,14 +230,14 @@ function verifyWinner() {
       block9Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block1Child === "o" &&
       block5Child === "o" &&
       block9Child === "o"
     ) {
       // O venceu
-      alert("O venceu!");
+      declareWinner("o");
     }
   }
 
@@ -256,14 +256,14 @@ function verifyWinner() {
       block7Child === "x"
     ) {
       // X venceu
-      alert("X venceu!");
+      declareWinner("x");
     } else if(
       block3Child === "o" &&
       block5Child === "o" &&
       block7Child === "o"
     ) {
       // O venceu
-      alert("X venceu!");
+      declareWinner("o");
     }
   }
 
@@ -277,6 +277,41 @@ function verifyWinner() {
   }
 
   if(counter == 9) {
-    alert("Deu velha!");
+    declareWinner();
+  }
+}
+
+// Limpa o jogo, declara o vencedor e atualiza o placar
+function declareWinner(winner="") {
+  let scoreboardX = document.querySelector("#scoreboard-1");
+  let scoreboardO = document.querySelector("#scoreboard-2");
+  let message = "";
+
+  if(winner === "x") {
+    scoreboardX.textContent = parseInt(scoreboardX.textContent) + 1;
+    message = "Jogador 1 vencer!";
+  } else if(winner === "o") {
+    scoreboardO.textContent = parseInt(scoreboardX.textContent) + 1;
+    message = "Jogador 2 vencer!";
+  } else {
+    message = "Deu velha!";
+  }
+
+  messageText.innerHTML = message;
+  messageContainer.classList.remove("hide");
+
+  setTimeout(function() {
+    messageContainer.classList.add("hide");
+  }, 2000);
+
+  // Zerando as jogadas
+  player1 = 0, player2 = 0;
+
+  // Removendo as jogadas
+  let boxesToRemove = document.querySelectorAll(".box div");
+
+  for(let i = 0; i < boxesToRemove.length; i++) {
+    // Removendo a filha do pai
+    boxesToRemove[i].parentNode.removeChild(boxesToRemove[i]);
   }
 }
