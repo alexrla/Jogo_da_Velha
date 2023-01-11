@@ -25,8 +25,18 @@ for(let i = 0; i < boxes.length; i++) {
       this.appendChild(cloneElement);
 
       // Computando jogada
-      if(player1 === player2) player1++;
-      else player2++;
+      if(player1 === player2) {
+        player1++;
+
+        if(secondPlayer === "ai-player") {
+          // Executando a jogada
+          aiMove();
+
+          player2++;
+        }
+      } else {
+        player2++;
+      }
     }
 
     // Verificando o vencedor
@@ -34,6 +44,22 @@ for(let i = 0; i < boxes.length; i++) {
   });
 }
 
+// 2 playeres / IA
+for(let i = 0; i < btns.length; i++)  {
+  btns[i].addEventListener("click", function() {
+    secondPlayer = this.getAttribute("id");
+
+    for(let j = 0; j < btns.length; j++)  {
+      btns[j].style.display = "none";
+    }
+
+    setTimeout(function() {
+      let container = document.querySelector("#container");
+
+      container.classList.remove("hide");
+    }, 300);
+  });
+}
 // Identificando o jogador
 function verifyPlayer(player1, player2) {
   if(player1 === player2) {
@@ -314,4 +340,30 @@ function declareWinner(winner="") {
     // Removendo a filha do pai
     boxesToRemove[i].parentNode.removeChild(boxesToRemove[i]);
   }
+}
+
+function aiMove() {
+  let cloneO = o.cloneNode(true);
+  let counter = 0, filled = 0;
+
+  for(let i = 0; i < boxes.length; i++) {
+    let randomNumber = Math.floor(Math.random() * 5);
+
+    // A jogada é feita se o box estiver vazio
+    if(boxes[i].childNodes[0] === undefined) {
+      if(randomNumber <= 1) {
+        boxes[i].appendChild(cloneO);
+        counter++;
+        break;
+      }
+    // Boxes já preenchidos
+    } else {
+      filled++;
+    }
+  }
+
+  if(counter === 0 && filled < 9) {
+    aiMove();
+  } 
+
 }
